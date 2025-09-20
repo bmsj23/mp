@@ -1,0 +1,123 @@
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { createPortal } from 'react-dom';
+import { User, Calendar, LogOut, Building } from 'lucide-react';
+import { useAuth } from '../hooks/useAuth';
+import LoginModal from './LoginModal';
+
+export default function Header() {
+  const { user, logout } = useAuth();
+  const location = useLocation();
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  // Check active pages
+  const isMyBookingsActive = location.pathname === '/dashboard/my-bookings';
+  const isSpacesActive = location.pathname === '/';
+
+  return (
+    <header className="bg-white/95 backdrop-blur-md shadow-lg border-b border-stone-200/50 sticky top-0 z-50">
+      <div className="container mx-auto px-8 lg:px-16 xl:px-24 2xl:px-32 py-4">
+        <div className="flex justify-between items-center">
+          {/* Logo */}
+          <Link to="/" className="group flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-amber-800 to-stone-800 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300">
+              <span className="text-white font-bold text-lg">S</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl font-light text-stone-900 tracking-wide">StudySpot</span>
+              <span className="text-xs text-amber-800 font-medium uppercase tracking-wider">Philippines</span>
+            </div>
+          </Link>
+
+          <nav className="flex items-center gap-6">
+            {user ? (
+              <div className="flex items-center gap-6">
+                <Link
+                  to="/"
+                  className={`group flex items-center gap-2 transition-all duration-300 font-medium ${
+                    isSpacesActive
+                      ? 'text-amber-800 bg-amber-50 px-3 py-2 rounded-full border border-amber-200'
+                      : 'text-stone-700 hover:text-amber-800'
+                  }`}
+                >
+                  <Building className={`h-4 w-4 group-hover:scale-110 transition-transform ${
+                    isSpacesActive ? 'text-amber-800' : ''
+                  }`} />
+                  <span>Spaces</span>
+                  {isSpacesActive && (
+                    <div className="w-2 h-2 bg-amber-800 rounded-full"></div>
+                  )}
+                </Link>
+
+                <Link
+                  to="/dashboard/my-bookings"
+                  className={`group flex items-center gap-2 transition-all duration-300 font-medium ${
+                    isMyBookingsActive
+                      ? 'text-amber-800 bg-amber-50 px-3 py-2 rounded-full border border-amber-200'
+                      : 'text-stone-700 hover:text-amber-800'
+                  }`}
+                >
+                  <Calendar className={`h-4 w-4 group-hover:scale-110 transition-transform ${
+                    isMyBookingsActive ? 'text-amber-800' : ''
+                  }`} />
+                  <span>My Bookings</span>
+                  {isMyBookingsActive && (
+                    <div className="w-2 h-2 bg-amber-800 rounded-full"></div>
+                  )}
+                </Link>
+
+                <div className="flex items-center gap-3 px-4 py-2 bg-stone-50 rounded-full border border-stone-200">
+                  <div className="w-8 h-8 bg-gradient-to-br from-amber-700 to-stone-700 rounded-full flex items-center justify-center">
+                    <User className="h-4 w-4 text-white" />
+                  </div>
+                  <span className="text-stone-700 font-medium text-sm">
+                    {user.name}
+                  </span>
+                </div>
+
+                <button
+                  onClick={logout}
+                  className="group flex items-center gap-2 bg-gradient-to-r from-stone-800 to-stone-900 text-white px-5 py-2.5 rounded-full hover:from-stone-700 hover:to-stone-800 transition-all duration-300 shadow-md hover:shadow-lg font-medium"
+                >
+                  <LogOut className="h-4 w-4 group-hover:scale-110 transition-transform" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-6">
+                <Link
+                  to="/"
+                  className={`group flex items-center gap-2 transition-all duration-300 font-medium ${
+                    isSpacesActive
+                      ? 'text-amber-800 bg-amber-50 px-3 py-2 rounded-full border border-amber-200'
+                      : 'text-stone-700 hover:text-amber-800'
+                  }`}
+                >
+                  <Building className={`h-4 w-4 group-hover:scale-110 transition-transform ${
+                    isSpacesActive ? 'text-amber-800' : ''
+                  }`} />
+                  <span>Spaces</span>
+                  {isSpacesActive && (
+                    <div className="w-2 h-2 bg-amber-800 rounded-full"></div>
+                  )}
+                </Link>
+
+                <button
+                  onClick={() => setShowLoginModal(true)}
+                  className="bg-gradient-to-r from-amber-800 to-stone-800 text-white px-6 py-2.5 rounded-full hover:from-amber-700 hover:to-stone-700 transition-all duration-300 shadow-md hover:shadow-lg font-medium"
+                >
+                  Sign In
+                </button>
+              </div>
+            )}
+          </nav>
+        </div>
+      </div>
+
+      {showLoginModal && createPortal(
+        <LoginModal onClose={() => setShowLoginModal(false)} />,
+        document.body
+      )}
+    </header>
+  );
+}
