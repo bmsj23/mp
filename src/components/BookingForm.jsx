@@ -132,7 +132,7 @@ export default function BookingForm({ space, onDateChange }) {
             value={formData.date}
             onChange={handleChange}
             min={today}
-            className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500"
+            className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 hover:cursor-pointer"
             required
           />
         </div>
@@ -146,7 +146,7 @@ export default function BookingForm({ space, onDateChange }) {
             name="timeSlot"
             value={formData.timeSlot}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500"
+            className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 hover:cursor-pointer"
             required
           >
             <option value="">Choose a time slot</option>
@@ -212,7 +212,7 @@ export default function BookingForm({ space, onDateChange }) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-stone-800 text-white py-3 rounded-lg hover:bg-stone-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+        className="w-full bg-stone-800 text-white py-3 rounded-lg hover:bg-stone-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center hover:cursor-pointer"
       >
         {isSubmitting ? (
           <>
