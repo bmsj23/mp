@@ -12,7 +12,7 @@ export default function Modal({ isOpen, onClose, title, children }) {
             onClick={onClose}
             className="ml-auto text-stone-500 hover:text-stone-700 z-10"
           >
-            <X className="h-5 w-5" />
+            <X className="h-5 w-5 hover:cursor-pointer" />
           </button>
         </div>
         {children}

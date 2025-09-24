@@ -323,13 +323,13 @@ export default function Dashboard() {
                 <div className="flex gap-3">
                   <button
                     onClick={handleCloseCancelModal}
-                    className="flex-1 bg-stone-200 text-stone-800 py-2 rounded-lg hover:bg-stone-300 transition-colors"
+                    className="flex-1 bg-stone-200 text-stone-800 py-2 rounded-lg hover:bg-stone-300 transition-colors hover:cursor-pointer"
                   >
                     Keep Booking
                   </button>
                   <button
                     onClick={handleConfirmCancel}
-                    className="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors"
+                    className="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors hover:cursor-pointer"
                   >
                     Cancel Booking
                   </button>
