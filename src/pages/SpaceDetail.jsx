@@ -98,15 +98,17 @@ export default function SpaceDetail() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
             {/* Enhanced Image Gallery */}
             <div className="relative">
-              <div className="aspect-w-16 aspect-h-12">
-                <img
-                  src={allImages[currentImageIndex]}
-                  alt={space.name}
-                  className="w-full h-80 lg:h-96 object-cover"
-                  onError={(e) => {
-                    e.target.src = 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=400&fit=crop';
-                  }}
-                />
+              <div className="flex items-center justify-center py-8">
+                <div className="w-full max-w-xl aspect-w-16 aspect-h-12">
+                  <img
+                    src={allImages[currentImageIndex]}
+                    alt={space.name}
+                    className="rounded-2xl w-full h-80 lg:h-96 object-cover shadow-lg border border-stone-200"
+                    onError={(e) => {
+                      e.target.src = 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=400&fit=crop';
+                    }}
+                  />
+                </div>
               </div>
 
 
@@ -147,7 +149,7 @@ export default function SpaceDetail() {
                       <button
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
-                        className={`w-full h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                        className={`w-full h-16 rounded-lg overflow-hidden border-2 transition-all hover:cursor-pointer ${
                           currentImageIndex === index
                             ? 'border-amber-600 shadow-lg scale-105'
                             : 'border-stone-300 hover:border-amber-400'
