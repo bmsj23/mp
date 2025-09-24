@@ -38,69 +38,69 @@ export default function LoginModal({ onClose }) {
 
   return (
     <div
-      className="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-gradient-to-br from-[#a88e73]/30 to-[#766351]/30 backdrop-blur-md flex items-center justify-center z-50"
       onClick={handleOverlayClick}
     >
       <div
-        className="bg-white rounded-lg p-6 w-full max-w-md mx-4 shadow-xl"
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 p-0 overflow-hidden border border-[#a88e73]/30"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-stone-800">Login</h2>
+        {/* Header */}
+        <div className="bg-gradient-to-r from-[#a88e73] to-[#766351] px-6 py-5 flex items-center justify-between">
+          <h2 className="text-2xl font-semibold text-white tracking-wide">Sign In</h2>
           <button
             onClick={onClose}
-            className="text-stone-500 hover:text-stone-700"
+            className="text-white hover:text-black transition-colors"
           >
-            <X className="h-5 w-5" />
+            <X className="h-6 w-6" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="px-6 py-8 space-y-6">
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1">
-              Username
-            </label>
+            <label className="block text-sm font-medium text-[#766351] mb-2">Username</label>
             <input
               type="text"
               name="username"
               value={formData.username}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500"
+              placeholder="Enter your username"
+              className="w-full px-4 py-3 border border-[#a88e73] rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-[#a88e73] focus:border-[#766351] transition-all"
               required
             />
           </div>
-
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1">
-              Password
-            </label>
+            <label className="block text-sm font-medium text-[#766351] mb-2">Password</label>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500"
+              placeholder="Enter your password"
+              className="w-full px-4 py-3 border border-[#a88e73] rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-[#a88e73] focus:border-[#766351] transition-all"
               required
             />
           </div>
-
           {error && (
-            <p className="text-red-600 text-sm">{error}</p>
+            <p className="text-red-600 text-sm text-center font-medium">{error}</p>
           )}
-
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-stone-800 text-white py-2 rounded-lg hover:bg-stone-700 transition-colors disabled:opacity-50"
+            className="w-full py-3 rounded-lg bg-gradient-to-r from-[#a88e73] to-[#766351] text-white font-semibold text-lg shadow-md hover:from-[#766351] hover:to-[#a88e73] transition-all duration-200 disabled:opacity-50"
           >
             {isLoading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
-        <div className="mt-4 text-sm text-stone-600">
-          <p>Demo credentials:</p>
-          <p>Username: user</p>
-          <p>Password: 123</p>
+        {/* Demo credentials */}
+        <div className="bg-[#f7f3ef] px-6 py-4 text-sm text-[#766351] border-t border-[#a88e73]/20">
+          <p className="font-semibold mb-1">Demo credentials:</p>
+          <div className="flex gap-6">
+            <p><span className="font-medium">Username:</span> user</p>
+            <p><span className="font-medium">Password:</span> 123</p>
+          </div>
         </div>
       </div>
     </div>
