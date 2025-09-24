@@ -34,10 +34,20 @@ export default function Homepage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-stone-50 via-white to-amber-50 min-h-[calc(100vh-4rem)] flex items-center">
+      <section className="relative bg-gradient-to-br from-stone-50 via-white to-amber-50 min-h-[calc(100vh-4rem)] flex items-center overflow-hidden">
+        {/* Background image with dark overlay */}
+        <div className="absolute inset-0 w-full h-full">
+          <img
+            src="/assets/images/hero-section.jpg"
+            alt="Hero Section Background"
+            className="w-full h-full object-cover opacity-30"
+            style={{ zIndex: 0 }}
+          />
+          <div className="absolute inset-0 bg-black/1"></div>
+        </div>
         {/* Subtle background pattern */}
-        <div className="absolute inset-0 bg-gradient-to-r from-stone-900/5 to-amber-900/5"></div>
-        <div className="absolute inset-0" style={{
+        <div className="absolute inset-0 bg-gradient-to-r from-stone-900/5 to-amber-900/5 pointer-events-none"></div>
+        <div className="absolute inset-0 pointer-events-none" style={{
           backgroundImage: `radial-gradient(circle at 25% 25%, rgba(120, 113, 108, 0.1) 0%, transparent 50%),
                            radial-gradient(circle at 75% 75%, rgba(180, 83, 9, 0.05) 0%, transparent 50%)`
         }}></div>
