@@ -61,7 +61,7 @@ export default function SpaceCard({ space }) {
 
           <Link
             to={`/space/${space.id}`}
-            className="bg-[#a88e73] text-white px-4 py-2 rounded-lg text-sm hover:bg-amber-800 transition-colors"
+            className="bg-[#a88e73] text-white px-4 py-2 rounded-lg text-sm hover:bg-[#766351] transition-colors"
           >
             View Details & Book
           </Link>
