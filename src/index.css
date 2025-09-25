@@ -54,6 +54,13 @@ button:focus {
   outline-offset: 2px;
 }
 
+/* Utility to disable the global focus ring for specific elements (use sparingly) */
+.no-focus-ring:focus,
+.no-focus-ring:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 img {
   max-width: 100%;
   height: auto;
