@@ -62,3 +62,40 @@ img {
 .hero-radial-bg {
   background-image: radial-gradient(circle at 25% 25%, rgba(120, 113, 108, 0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(180, 83, 9, 0.05) 0%, transparent 50%);
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+.heading-poppins {
+  font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+/* Slide-in transition hero columns */
+.slide-from-left {
+  transform: translateX(-48px);
+  opacity: 0;
+  transition: transform 700ms cubic-bezier(.2,.9,.2,1), opacity 700ms ease-out;
+}
+.slide-from-left.in-view {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.slide-from-right {
+  transform: translateX(48px);
+  opacity: 0;
+  transition: transform 700ms cubic-bezier(.2,.9,.2,1), opacity 700ms ease-out;
+}
+.slide-from-right.in-view {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide-from-left, .slide-from-right {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
