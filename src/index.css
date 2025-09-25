@@ -92,6 +92,15 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 1;
 }
 
+/* When replaying the entrance animation we want the elements to snap to the hidden state
+   instantly (no slide-out). Applying the `no-transition` class temporarily disables
+   transitions so the element jumps to its hidden transform/opacity, then we remove
+   the flag and trigger the `in-view` state to animate the entrance. */
+.slide-from-left.no-transition,
+.slide-from-right.no-transition {
+  transition: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .slide-from-left, .slide-from-right {
     transition: none !important;
