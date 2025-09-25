@@ -183,7 +183,7 @@ export default function SpaceDetail() {
                   key={index}
                   className="flex items-center gap-3 p-3 bg-gradient-to-r from-stone-50 to-amber-50 rounded-xl border border-stone-200/50 hover:shadow-md transition-all duration-300"
                 >
-                  <div className="w-8 h-8 bg-gradient-to-br from-amber-600 to-stone-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-8 h-8 bg-[#a88e73] rounded-lg flex items-center justify-center flex-shrink-0">
                     <span className="text-white text-xs">✓</span>
                   </div>
                   <span className="text-stone-700 font-medium text-sm">{amenity}</span>
@@ -242,7 +242,7 @@ export default function SpaceDetail() {
 
         {/* Luxury Booking Section */}
         <div className="bg-white rounded-3xl shadow-xl border border-stone-200/50 overflow-hidden">
-          <div className="bg-gradient-to-r from-amber-800 to-stone-800 text-white p-8">
+          <div className="bg-[#766351] text-white p-8">
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-3xl font-light mb-2">Reserve Your Space</h2>
