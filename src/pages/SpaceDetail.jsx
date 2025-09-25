@@ -99,15 +99,27 @@ export default function SpaceDetail() {
             {/* Enhanced Image Gallery */}
             <div className="relative">
               <div className="flex items-center justify-center py-8">
-                <div className="w-full max-w-xl aspect-w-16 aspect-h-12">
-                  <img
-                    src={allImages[currentImageIndex]}
-                    alt={space.name}
-                    className="rounded-2xl w-full h-80 lg:h-96 object-cover shadow-lg border border-stone-200"
-                    onError={(e) => {
-                      e.target.src = 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=400&fit=crop';
-                    }}
-                  />
+                {/* Fixed-height gallery image to avoid layout shift when changing thumbnails */}
+                <div className="w-full max-w-xl overflow-hidden rounded-2xl shadow-lg border border-stone-200">
+                  <div className="w-full h-80 lg:h-96 bg-center bg-cover bg-no-repeat"
+                    role="img"
+                    aria-label={space.name}
+                    style={{ backgroundImage: `url(${allImages[currentImageIndex]})` }}
+                  >
+                    {/* Hidden image for screen readers and image fallback handling */}
+                    <img
+                      src={allImages[currentImageIndex]}
+                      alt={space.name}
+                      className="sr-only"
+                      onError={(e) => {
+
+                        e.target.src = 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=400&fit=crop';
+                        if (e.target.parentElement && e.target.parentElement.style) {
+                          e.target.parentElement.style.backgroundImage = `url(${e.target.src})`;
+                        }
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -158,7 +170,7 @@ export default function SpaceDetail() {
                         <img
                           src={image}
                           alt={`${space.name} ${index + 1}`}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover block"
                           onError={(e) => {
                             e.target.src = 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=80&h=64&fit=crop';
                           }}
