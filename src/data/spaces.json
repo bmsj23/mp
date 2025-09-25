@@ -166,7 +166,7 @@
     "location": "Lipa City",
     "price": 480,
     "main_image": "/assets/images/space-10.jpg",
-    "images": ["/assets/images/space10_a.png", "/assets/images/space-10.png"],
+    "images": ["/assets/images/space10_a.jpg", "/assets/images/space10_b.png"],
     "description": "Premium business center in Ortigas with executive amenities. Perfect for important meetings and professional work.",
     "amenities": [
       "Executive Lounges",
