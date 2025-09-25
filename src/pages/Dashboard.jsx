@@ -301,7 +301,7 @@ export default function Dashboard() {
         >
           {bookingToCancel && (
             <div>
-              <p className="text-stone-700 mb-4">
+              <p className="text-stone-700 mb-4 text-center">
                 Are you sure you want to cancel your booking for <strong>{bookingToCancel.spaceName}</strong>?
               </p>
               <div className="bg-stone-50 p-3 rounded-lg mb-4">
