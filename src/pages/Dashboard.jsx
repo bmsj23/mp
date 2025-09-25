@@ -6,6 +6,7 @@ import Modal from '../components/Modal';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useAuth } from '../hooks/useAuth';
 import { useBookings } from '../hooks/useBookings';
+import spacesData from '../data/spaces.json';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -64,11 +65,48 @@ export default function Dashboard() {
     });
   };
 
+  // Helpers to parse time ranges and detect if a slot's end time has passed for a given booking date
+  const parseTimeOnDate = (dateStr, timeHHMM) => {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const [hh, mm] = (timeHHMM || '00:00').split(':').map(Number);
+    return new Date(year, month - 1, day, hh, mm, 0, 0);
+  };
+
+  const getISODate = (d) => d.toISOString().split('T')[0];
+
+  const getSlotForBooking = (booking) => {
+    const space = spacesData.find(s => s.id === Number(booking.spaceId));
+    if (!space || !Array.isArray(space.time_slots)) return null;
+    return space.time_slots.find(s => s.label === booking.timeSlot) || null;
+  };
+
   const isPastBooking = (booking) => {
-    const bookingDate = new Date(booking.date);
+    // If booking date is before today -> past
+    const bookingDateOnly = booking.date;
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return bookingDate < today;
+    const todayStr = getISODate(today);
+    if (bookingDateOnly < todayStr) return true;
+
+    // If booking is after today -> not past
+    if (bookingDateOnly > todayStr) return false;
+
+    // bookingDateOnly === todayStr -> need to check end time of the booked slot
+    const slot = getSlotForBooking(booking);
+    if (!slot || !slot.end) {
+      // Fallback: treat as not past if we can't find slot info
+      return false;
+    }
+
+    let end = parseTimeOnDate(bookingDateOnly, slot.end);
+    const start = parseTimeOnDate(bookingDateOnly, slot.start || slot.end);
+    // If end <= start, treat end as next day (overnight)
+    if (slot.end === '00:00' || end <= start) {
+      end = new Date(end.getTime());
+      end.setDate(end.getDate() + 1);
+    }
+
+    const now = new Date();
+    return now >= end;
   };
 
   // Separate current and past bookings and sort by latest first
@@ -153,7 +191,7 @@ export default function Dashboard() {
                             )}
                           </div>
                           <p className="text-xs text-stone-500 mt-2">
-                            Booked on {new Date(booking.createdAt).toLocaleDateString()}
+                            Booked on {new Date(booking.createdAt).toLocaleDateString()} at {new Date(booking.createdAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
                           </p>
                         </div>
                         <div className="flex gap-2">
@@ -224,7 +262,7 @@ export default function Dashboard() {
                             )}
                           </div>
                           <p className="text-xs text-stone-500 mt-2">
-                            Booked on {new Date(booking.createdAt).toLocaleDateString()}
+                            Booked on {new Date(booking.createdAt).toLocaleDateString()} at {new Date(booking.createdAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
                           </p>
                         </div>
                         <div className="flex gap-2">
@@ -245,18 +283,18 @@ export default function Dashboard() {
             {/* Cancelled Bookings */}
             {sortedCancelledBookings.length > 0 && (
               <div>
-                <h2 className="text-xl font-semibold text-red-700 mb-4">
+                <h2 className="text-xl font-semibold text-black-700 mb-4">
                   Cancelled Bookings ({sortedCancelledBookings.length})
                 </h2>
                 <div className="grid gap-4">
                   {sortedCancelledBookings.map(booking => (
-                    <div key={booking.id} className="bg-red-50 rounded-lg p-6 border border-red-200 opacity-80">
+                    <div key={booking.id} className="bg-white-200 rounded-lg p-6 border border-stone-200 opacity-80">
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-red-800 mb-2">
+                          <h3 className="text-lg font-semibold text-stone-800 mb-2">
                             {booking.spaceName}
                           </h3>
-                          <div className="space-y-1 text-red-700">
+                          <div className="space-y-1 text-stone-700">
                             <p className="flex items-center">
                               <MapPin className="h-3 w-3 mr-1" />
                               {booking.spaceLocation}
@@ -280,8 +318,11 @@ export default function Dashboard() {
                               </p>
                             )}
                           </div>
+                          <p className="text-xs text-stone-500 mt-2">
+                            Booked on {new Date(booking.createdAt).toLocaleDateString()} at {new Date(booking.createdAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+                          </p>
                           <p className="text-xs text-red-500 mt-2">
-                            Cancelled on {new Date(booking.cancelledAt).toLocaleDateString()}
+                            Cancelled on {new Date(booking.cancelledAt).toLocaleDateString()} at {new Date(booking.createdAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
                           </p>
                         </div>
                       </div>
