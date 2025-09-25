@@ -6,6 +6,13 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import spacesData from '../data/spaces.json';
 
 export default function Homepage() {
+  const [heroInView, setHeroInView] = useState(false);
+
+  useEffect(() => {
+    // Trigger entrance animation after mount
+    const t = setTimeout(() => setHeroInView(true), 120);
+    return () => clearTimeout(t);
+  }, []);
   const [searchTerm, setSearchTerm] = useState('');
   const [spaces, setSpaces] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
