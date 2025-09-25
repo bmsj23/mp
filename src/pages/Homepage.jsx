@@ -55,28 +55,32 @@ export default function Homepage() {
           <div className="absolute inset-0 w-full h-[calc(100vh-5rem)] bg-gradient-to-r from-stone-900/5 to-amber-900/5 pointer-events-none"></div>
           <div className="absolute inset-0 w-full h-[calc(100vh-5rem)] pointer-events-none hero-radial-bg"></div>
 
-        <div className="relative container mx-auto px-8 lg:px-16 xl:px-24 2xl:px-32 h-full flex flex-col items-center justify-center">
-          <div className="text-center max-w-4xl mx-auto flex flex-col justify-center h-full">
-            {/* Main Heading */}
-            <div className="mb-6">
-              <h1 className="text-6xl lg:text-7xl font-light text-stone-800 mb-2 tracking-tight">
-                StudySpot
-                <span className="block text-5xl lg:text-6xl font-light text-amber-800 mt-1">
-                  Philippines
+        <div className="relative container mx-auto px-8 lg:px-16 xl:px-24 2xl:px-32 h-full flex items-center gap-18">
+          <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-21 items-center h-full">
+            {/* Left: Main Heading */}
+            <div className={`flex flex-col justify-center items-center lg:items-start text-center lg:text-left lg:justify-self-start slide-from-left ${heroInView ? 'in-view' : ''}`}>
+              <h1 className="text-6xl lg:text-8xl font-extrabold text-stone-800 mb-2 tracking-tight">
+                Find Your
+                <span className="block text-5xl lg:text-8xl font-extrabold text-amber-800 mt-1">
+                  Focus Zone
                 </span>
               </h1>
             </div>
 
-            {/* Subtitle */}
-            <div className="mb-8">
-              <p className="text-xl lg:text-2xl text-stone-800 font-medium leading-relaxed max-w-3xl mx-auto">
-                Discover exceptional co-working spaces and study sanctuaries designed for
-                <span className="text-amber-800 font-medium"> productivity</span> and
-                <span className="text-amber-800 font-medium"> success</span>.
-              </p>
-              <p className="text-lg text-stone-800 mt-4 max-w-2xl mx-auto">
-                Premium workspaces across the Philippines, curated for professionals and students who demand excellence.
-              </p>
+            {/* Right: Subtitle */}
+            <div className={`flex flex-col justify-center text-center lg:justify-self-end lg:items-end slide-from-right ${heroInView ? 'in-view' : ''}`}>
+              <div className="lg:max-w-xl w-full">
+                <div className="mb-4">
+                  <p className="text-xl lg:text-2xl text-stone-800 font-medium leading-relaxed w-full text-center lg:text-right">
+                    Discover exceptional co-working spaces and study sanctuaries designed for
+                    <span className="text-amber-800 font-medium"> productivity</span> and
+                    <span className="text-amber-800 font-medium"> success</span>.
+                  </p>
+                </div>
+                <p className="text-lg text-stone-800 mt-4 w-full text-center lg:text-right">
+                  Premium workspaces across the Philippines, curated for professionals and students who demand excellence.
+                </p>
+              </div>
             </div>
           </div>
         </div>
