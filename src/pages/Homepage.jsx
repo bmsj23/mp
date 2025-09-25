@@ -79,7 +79,7 @@ export default function Homepage() {
       <section className="py-16 bg-gradient-to-b from-stone-50 to-white">
         <div className="container mx-auto px-8 lg:px-16 xl:px-24 2xl:px-32">
           {/* Section Header */}
-          <div className="text-center mb-12">
+          <div className="text-center mb-6">
             <h2 className="text-3xl lg:text-4xl font-light text-stone-900 mb-4">
               {searchTerm ? 'Search Results' : 'Study and Working Spaces'}
             </h2>
