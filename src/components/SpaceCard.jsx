@@ -4,11 +4,12 @@ import { MapPin, Clock } from 'lucide-react';
 export default function SpaceCard({ space }) {
   return (
     <div className="bg-white rounded-lg shadow-sm border border-stone-200 overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col">
-      <div className="aspect-w-16 aspect-h-9">
+      {/* Fixed-height image area*/}
+      <div className="w-full h-60 overflow-hidden">
         <img
           src={space.main_image}
           alt={space.name}
-          className="w-full h-40 object-cover"
+          className="w-full h-full object-cover block"
           onError={(e) => {
             e.target.src = 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop';
           }}
