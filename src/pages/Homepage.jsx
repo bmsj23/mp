@@ -34,29 +34,25 @@ export default function Homepage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-stone-50 via-white to-amber-50 min-h-[calc(100vh-4rem)] flex items-center overflow-hidden">
+    <section className="relative bg-gradient-to-br from-stone-50 via-white to-amber-50 h-[calc(100vh-5rem)] flex items-center overflow-hidden p-0 m-0">
         {/* Background image with dark overlay */}
-        <div className="absolute inset-0 w-full h-full">
+          <div className="absolute inset-0 w-full h-[calc(100vh-5rem)]">
           <img
             src="/assets/images/hero-section.jpg"
             alt="Hero Section Background"
-            className="w-full h-full object-cover opacity-30"
-            style={{ zIndex: 0 }}
+              className="w-full h-[calc(100vh-5rem)] object-cover opacity-30 z-0"
           />
-          <div className="absolute inset-0 bg-black/1"></div>
+            <div className="absolute inset-0 w-full h-[calc(100vh-5rem)] bg-black/15"></div>
         </div>
         {/* Subtle background pattern */}
-        <div className="absolute inset-0 bg-gradient-to-r from-stone-900/5 to-amber-900/5 pointer-events-none"></div>
-        <div className="absolute inset-0 pointer-events-none" style={{
-          backgroundImage: `radial-gradient(circle at 25% 25%, rgba(120, 113, 108, 0.1) 0%, transparent 50%),
-                           radial-gradient(circle at 75% 75%, rgba(180, 83, 9, 0.05) 0%, transparent 50%)`
-        }}></div>
+          <div className="absolute inset-0 w-full h-[calc(100vh-5rem)] bg-gradient-to-r from-stone-900/5 to-amber-900/5 pointer-events-none"></div>
+          <div className="absolute inset-0 w-full h-[calc(100vh-5rem)] pointer-events-none hero-radial-bg"></div>
 
-        <div className="relative container mx-auto px-8 lg:px-16 xl:px-24 2xl:px-32">
-          <div className="text-center max-w-4xl mx-auto">
+        <div className="relative container mx-auto px-8 lg:px-16 xl:px-24 2xl:px-32 h-full flex flex-col items-center justify-center">
+          <div className="text-center max-w-4xl mx-auto flex flex-col justify-center h-full">
             {/* Main Heading */}
             <div className="mb-6">
-              <h1 className="text-6xl lg:text-7xl font-extralight text-stone-900 mb-2 tracking-tight">
+              <h1 className="text-6xl lg:text-7xl font-light text-stone-800 mb-2 tracking-tight">
                 StudySpot
                 <span className="block text-5xl lg:text-6xl font-light text-amber-800 mt-1">
                   Philippines
@@ -65,19 +61,19 @@ export default function Homepage() {
             </div>
 
             {/* Subtitle */}
-            <div className="mb-12">
-              <p className="text-xl lg:text-2xl text-stone-700 font-light leading-relaxed max-w-3xl mx-auto">
+            <div className="mb-8">
+              <p className="text-xl lg:text-2xl text-stone-800 font-medium leading-relaxed max-w-3xl mx-auto">
                 Discover exceptional co-working spaces and study sanctuaries designed for
                 <span className="text-amber-800 font-medium"> productivity</span> and
                 <span className="text-amber-800 font-medium"> success</span>.
               </p>
-              <p className="text-lg text-stone-600 mt-4 max-w-2xl mx-auto">
+              <p className="text-lg text-stone-800 mt-4 max-w-2xl mx-auto">
                 Premium workspaces across the Philippines, curated for professionals and students who demand excellence.
               </p>
             </div>
 
             {/* Enhanced Search Section */}
-            <div className="mb-12">
+            <div>
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-stone-200/50 p-8 max-w-2xl mx-auto">
                 <h3 className="text-lg font-medium text-stone-800 mb-4">
                   Find Your Perfect Workspace
