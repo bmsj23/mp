@@ -39,7 +39,7 @@
     "name": "Cebu Creative Hub",
     "location": "Cebu City",
     "price": 250,
-    "main_image": "/assets/images/space-3.png",
+    "main_image": "/assets/images/space3_b.png",
     "images": ["/assets/images/space3_a.png", "/assets/images/space3_b.png"],
     "description": "A vibrant and artistic space designed to foster creativity and collaboration among Cebu's digital nomads and artists.",
     "amenities": [
