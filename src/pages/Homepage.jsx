@@ -71,25 +71,6 @@ export default function Homepage() {
                 Premium workspaces across the Philippines, curated for professionals and students who demand excellence.
               </p>
             </div>
-
-            {/* Enhanced Search Section */}
-            <div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-stone-200/50 p-8 max-w-2xl mx-auto">
-                <h3 className="text-lg font-medium text-stone-800 mb-4">
-                  Find Your Perfect Workspace
-                </h3>
-                <SearchBar
-                  searchTerm={searchTerm}
-                  onSearchChange={setSearchTerm}
-                  placeholder="Search by space name or location..."
-                />
-                {searchTerm && (
-                  <p className="text-stone-600 mt-4 text-sm">
-                    {filteredSpaces.length} premium space{filteredSpaces.length !== 1 ? 's' : ''} found for "{searchTerm}"
-                  </p>
-                )}
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -110,7 +91,20 @@ export default function Homepage() {
               }
             </p>
           </div>
+            {/* Search Section */}
+            <div>
+              <div className="backdrop-blur-sm p-8 max-w-[470px] mx-auto pb-14">
+                <h3 className="text-lg font-medium text-stone-800 mb-4 text-center">
+                  Find Your Perfect Workspace
+                </h3>
+                <SearchBar
+                  searchTerm={searchTerm}
+                  onSearchChange={setSearchTerm}
+                  placeholder="Search by space name or location..."
+                />
 
+              </div>
+            </div>
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-16">
               <div className="bg-white rounded-2xl shadow-lg p-8 border border-stone-200">
