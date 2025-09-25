@@ -8,8 +8,11 @@ export default function BookingForm({ space, onDateChange }) {
   const { user } = useAuth();
   const { addBooking, isSlotBooked } = useBookings();
   const navigate = useNavigate();
+  // Today's date in YYYY-MM-DD
+  const today = new Date().toISOString().split('T')[0];
+
   const [formData, setFormData] = useState({
-    date: '',
+    date: today,
     timeSlot: '',
     notes: ''
   });
@@ -17,9 +20,6 @@ export default function BookingForm({ space, onDateChange }) {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [initialized, setInitialized] = useState(false);
-
-  // Get today's date in YYYY-MM-DD format (stable reference)
-  const [today] = useState(() => new Date().toISOString().split('T')[0]);
 
   // Initialize with today's date and notify parent only once
   useEffect(() => {
@@ -47,18 +47,60 @@ export default function BookingForm({ space, onDateChange }) {
     setSuccess('');
   };
 
+  // Helpers: parse HH:mm into a Date on a given day, handle overnight slots
+  // Build a local Date from YYYY-MM-DD and HH:mm (ensures local timezone)
+  const parseTimeOnDate = (dateStr, timeHHMM) => {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const [hh, mm] = (timeHHMM || '00:00').split(':').map(Number);
+    // monthIndex is zero-based
+    return new Date(year, month - 1, day, hh, mm, 0, 0);
+  };
+
+  const getISODate = (d) => d.toISOString().split('T')[0];
+
+  const isSlotEndPastNowForDate = (slot, selectedDateStr) => {
+    if (!selectedDateStr || !slot || !slot.end) return false;
+    const now = new Date();
+    const todayStr = getISODate(now);
+    if (selectedDateStr !== todayStr) return false;
+
+    let end = parseTimeOnDate(selectedDateStr, slot.end);
+    const start = parseTimeOnDate(selectedDateStr, slot.start || slot.end);
+
+    // Handle special case where end === '00:00' (treat as midnight of next day)
+    if (slot.end === '00:00' || end <= start) {
+      end = new Date(end.getTime());
+      end.setDate(end.getDate() + 1);
+    }
+
+    // If current time is after or equal to the slot end, it's in the past
+    return now >= end;
+  };
+
   const validateBooking = () => {
     // Check if date is in the past
+    if (!formData.date) return 'Please select a date';
     const selectedDate = new Date(formData.date);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Reset time to start of day
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0); // Reset time to start of day
 
-    if (selectedDate < today) {
+    if (selectedDate < startOfToday) {
       return 'Cannot book a date in the past';
     }
 
-    // Check if the slot is already booked
-    if (isSlotBooked(space.id, formData.date, formData.timeSlot)) {
+    // timeSlot stored as index string
+    if (!formData.timeSlot && formData.timeSlot !== 0) return 'Please select a time slot';
+
+    const slot = space.time_slots[Number(formData.timeSlot)];
+    if (!slot) return 'Invalid time slot selected';
+
+    // Disallow booking if the slot's end time is already past for today
+    if (isSlotEndPastNowForDate(slot, formData.date)) {
+      return 'Time passed (Unavailable to be booked)';
+    }
+
+    // Check if the slot is already booked (compare by label)
+    if (isSlotBooked(space.id, formData.date, slot.label)) {
       return 'This time slot is already booked for the selected date';
     }
 
@@ -83,7 +125,8 @@ export default function BookingForm({ space, onDateChange }) {
       // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      // Create booking object
+      // Create booking object (store timeSlot as label)
+      const selectedSlot = space.time_slots[Number(formData.timeSlot)];
       const booking = {
         userId: user.id,
         userName: user.name,
@@ -91,7 +134,7 @@ export default function BookingForm({ space, onDateChange }) {
         spaceName: space.name,
         spaceLocation: space.location,
         date: formData.date,
-        timeSlot: formData.timeSlot,
+        timeSlot: selectedSlot ? selectedSlot.label : formData.timeSlot,
         notes: formData.notes,
         price: space.price
       };
@@ -99,9 +142,9 @@ export default function BookingForm({ space, onDateChange }) {
       addBooking(booking);
       setSuccess('Booking confirmed successfully! Redirecting to My Bookings...');
 
-      // Reset form
+      // Reset form (keep date as today)
       setFormData({
-        date: '',
+        date: today,
         timeSlot: '',
         notes: ''
       });
@@ -151,14 +194,15 @@ export default function BookingForm({ space, onDateChange }) {
           >
             <option value="">Choose a time slot</option>
             {space.time_slots.map((slot, index) => {
-              const isBooked = formData.date && isSlotBooked(space.id, formData.date, slot);
+              const isBooked = formData.date && isSlotBooked(space.id, formData.date, slot.label);
+              const isPast = formData.date && isSlotEndPastNowForDate(slot, formData.date);
               return (
                 <option
                   key={index}
-                  value={slot}
-                  disabled={isBooked}
+                  value={String(index)}
+                  disabled={isBooked || isPast}
                 >
-                  {slot} {isBooked ? '(Already Booked)' : ''}
+                  {slot.label} {isBooked ? '(Already Booked)' : isPast ? '(Past)' : ''}
                 </option>
               );
             })}
@@ -182,13 +226,13 @@ export default function BookingForm({ space, onDateChange }) {
       </div>
 
       {/* Booking Summary */}
-      {formData.date && formData.timeSlot && (
+      {formData.date && (formData.timeSlot !== '' && formData.timeSlot !== null) && (
         <div className="bg-stone-50 p-4 rounded-lg">
           <h4 className="font-semibold text-stone-800 mb-2">Booking Summary</h4>
           <div className="text-sm text-stone-600 space-y-1">
             <p><strong>Space:</strong> {space.name}</p>
             <p><strong>Date:</strong> {new Date(formData.date).toLocaleDateString()}</p>
-            <p><strong>Time:</strong> {formData.timeSlot}</p>
+            <p><strong>Time:</strong> {space.time_slots[Number(formData.timeSlot)]?.label}</p>
             <p><strong>Price:</strong> ₱{space.price}</p>
           </div>
         </div>
