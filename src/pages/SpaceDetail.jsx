@@ -242,7 +242,7 @@ export default function SpaceDetail() {
 
         {/* Luxury Booking Section */}
         <div className="bg-white rounded-3xl shadow-xl border border-stone-200/50 overflow-hidden">
-          <div className="bg-[#766351] text-white p-8">
+          <div className="bg-[#655545] text-white p-8">
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-3xl font-light mb-2">Reserve Your Space</h2>
