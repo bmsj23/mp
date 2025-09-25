@@ -16,9 +16,9 @@ export default function Header() {
   const isSpacesActive = location.pathname === '/';
 
   return (
-    <header className="bg-white/95 backdrop-blur-md shadow-lg border-b border-stone-200/50 sticky top-0 z-50">
-      <div className="container mx-auto px-8 lg:px-16 xl:px-24 2xl:px-32 py-4">
-        <div className="flex justify-between items-center">
+    <header className="bg-white/95 backdrop-blur-md shadow-lg border-b border-stone-200/50 sticky top-0 z-50 h-20">
+      <div className="container mx-auto px-8 lg:px-16 xl:px-24 2xl:px-32 h-full flex items-center">
+        <div className="flex justify-between items-center w-full">
           {/* Logo */}
           <Link to="/" className="group flex items-center space-x-3">
             <div className="w-10 h-10 bg-[#a88e73] rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300">
@@ -67,7 +67,7 @@ export default function Header() {
                     className="flex items-center gap-3 px-4 py-2 bg-stone-50 rounded-full border border-stone-200 focus:outline-none hover:cursor-pointer hover:bg-stone-200"
                     onClick={() => setShowUserDropdown((prev) => !prev)}
                   >
-                    <div className="w-8 h-8 bg-gradient-to-br from-amber-700 to-stone-700 rounded-full flex items-center justify-center hover:cursor-pointer">
+                    <div className="w-8 h-8 bg-[#7d5b3a] rounded-full flex items-center justify-center hover:cursor-pointer">
                       <User className="h-4 w-4 text-white" />
                     </div>
                     <span className="text-stone-700 font-medium text-sm">
@@ -75,7 +75,7 @@ export default function Header() {
                     </span>
                   </button>
                   {showUserDropdown && (
-                    <div className="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg border border-stone-200 z-50">
+                    <div className="absolute right-0 mt-2 w-27 bg-white rounded-xl shadow-lg border border-stone-200 z-50">
                       <button
                         onClick={() => { setShowUserDropdown(false); logout(); }}
                         className="w-full flex items-center gap-2 px-4 py-3 text-stone-800 hover:bg-stone-100 rounded-xl font-medium transition-colors hover:cursor-pointer"
