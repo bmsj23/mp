@@ -87,7 +87,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-stone-50">
       <Header />
 
-      <div className="container mx-auto px-8 lg:px-16 xl:px-24 2xl:px-32 py-8">
+      <div className="container mx-auto px-8 lg:px-16 xl:px-24 2xl:px-32 py-8 h-full">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-stone-800">My Bookings</h1>
           <Link
@@ -107,7 +107,7 @@ export default function Dashboard() {
             <p className="text-stone-600 mb-6">Start exploring our amazing study spaces and make your first booking!</p>
             <Link
               to="/"
-              className="bg-stone-800 text-white px-6 py-3 rounded-lg hover:bg-stone-700 transition-colors"
+              className="bg-[#766351] text-white px-6 py-3 rounded-lg hover:bg-stone-700 transition-colors"
             >
               Explore Spaces
             </Link>
