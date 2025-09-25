@@ -1,18 +1,38 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import SpaceCard from '../components/SpaceCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import spacesData from '../data/spaces.json';
+import { useAuth } from '../hooks/useAuth';
 
 export default function Homepage() {
   const [heroInView, setHeroInView] = useState(false);
 
+  const { user } = useAuth();
+  const [heroNoTransition, setHeroNoTransition] = useState(false);
+  const rafRef = useRef({ raf1: 0, raf2: 0 });
+
   useEffect(() => {
-    // Trigger entrance animation after mount
-    const t = setTimeout(() => setHeroInView(true), 120);
-    return () => clearTimeout(t);
-  }, []);
+    // Replay entrance animation on mount and whenever auth `user` changes (login/logout)
+    setHeroInView(false);
+    setHeroNoTransition(true);
+
+    // Use rAF twice to ensure the browser has applied the no-transition styles
+    const rafStore = rafRef.current;
+    rafStore.raf1 = requestAnimationFrame(() => {
+      rafStore.raf2 = requestAnimationFrame(() => {
+        setHeroNoTransition(false);
+        setHeroInView(true);
+      });
+    });
+
+    return () => {
+      // use the snapshot we created above for stable cleanup
+      cancelAnimationFrame(rafStore.raf1);
+      cancelAnimationFrame(rafStore.raf2);
+    };
+  }, [user]);
   const [searchTerm, setSearchTerm] = useState('');
   const [spaces, setSpaces] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -58,7 +78,7 @@ export default function Homepage() {
         <div className="relative container mx-auto px-8 lg:px-16 xl:px-24 2xl:px-32 h-full flex items-center gap-18">
           <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-21 items-center h-full">
             {/* Left: Main Heading */}
-            <div className={`flex flex-col justify-center items-center lg:items-start text-center lg:text-left lg:justify-self-start slide-from-left ${heroInView ? 'in-view' : ''}`}>
+            <div className={`flex flex-col justify-center items-center lg:items-start text-center lg:text-left lg:justify-self-start slide-from-left ${heroNoTransition ? 'no-transition' : ''} ${heroInView ? 'in-view' : ''}`}>
               <h1 className="text-6xl lg:text-8xl font-extrabold text-stone-800 mb-2 tracking-tight">
                 Find Your
                 <span className="block text-5xl lg:text-8xl font-extrabold text-amber-800 mt-1">
@@ -68,7 +88,7 @@ export default function Homepage() {
             </div>
 
             {/* Right: Subtitle */}
-            <div className={`flex flex-col justify-center text-center lg:justify-self-end lg:items-end slide-from-right ${heroInView ? 'in-view' : ''}`}>
+            <div className={`flex flex-col justify-center text-center lg:justify-self-end lg:items-end slide-from-right ${heroNoTransition ? 'no-transition' : ''} ${heroInView ? 'in-view' : ''}`}>
               <div className="lg:max-w-xl w-full">
                 <div className="mb-4">
                   <p className="text-xl lg:text-2xl text-stone-800 font-medium leading-relaxed w-full text-center lg:text-right">
