@@ -3,6 +3,7 @@ import AuthProvider from './contexts/AuthContext.jsx';
 import BookingsProvider from './contexts/BookingsContext.jsx';
 import Homepage from './pages/Homepage';
 import SpaceDetail from './pages/SpaceDetail';
+import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -15,6 +16,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Homepage />} />
               <Route path="/space/:spaceId" element={<SpaceDetail />} />
+              <Route path="/login" element={<Login />} />
               <Route
                 path="/dashboard/my-bookings"
                 element={

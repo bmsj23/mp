@@ -60,7 +60,6 @@ src/
 │   ├── SearchBar.jsx
 │   ├── SpaceCard.jsx
 │   ├── BookingForm.jsx
-│   ├── LoginModal.jsx
 │   ├── Modal.jsx
 │   ├── LoadingSpinner.jsx
 │   ├── ErrorBoundary.jsx

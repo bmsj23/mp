@@ -1,14 +1,12 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { createPortal } from 'react-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { User, Calendar, LogOut, Building } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
-import LoginModal from './LoginModal';
 
 export default function Header() {
   const { user, logout } = useAuth();
   const location = useLocation();
-  const [showLoginModal, setShowLoginModal] = useState(false);
+  const navigate = useNavigate();
   const [showUserDropdown, setShowUserDropdown] = useState(false);
 
   // Check active pages
@@ -70,9 +68,7 @@ export default function Header() {
                     <div className="w-8 h-8 bg-[#7d5b3a] rounded-full flex items-center justify-center hover:cursor-pointer">
                       <User className="h-4 w-4 text-white" />
                     </div>
-                    <span className="text-stone-700 font-medium text-sm">
-                      {user.name}
-                    </span>
+                    <span className="text-stone-700 font-medium text-sm">{user.name}</span>
                   </button>
                   {showUserDropdown && (
                     <div className="absolute right-0 mt-2 w-27 bg-white rounded-xl shadow-lg border border-stone-200 z-50">
@@ -97,28 +93,21 @@ export default function Header() {
                       : 'text-stone-700 hover:text-amber-800'
                   }`}
                 >
-                  <Building className={`h-4 w-4 group-hover:scale-110 transition-transform ${
-                    isSpacesActive ? 'text-amber-800' : ''
-                  }`} />
+                  <Building className={`h-4 w-4 group-hover:scale-110 transition-transform ${isSpacesActive ? 'text-amber-800' : ''}`} />
                   <span>Spaces</span>
                 </Link>
 
                 <button
-                  onClick={() => setShowLoginModal(true)}
+                  onClick={() => navigate('/login', { state: { from: location } })}
                   className="bg-[#a88e73] text-white px-6 py-2.5 rounded-full hover:bg-[#766351] hover:cursor-pointer transition-all duration-300 shadow-md hover:shadow-lg font-medium"
                 >
-                  Sign In
+                  Login
                 </button>
               </div>
             )}
           </nav>
         </div>
       </div>
-
-      {showLoginModal && createPortal(
-        <LoginModal onClose={() => setShowLoginModal(false)} />,
-        document.body
-      )}
     </header>
   );
 }
